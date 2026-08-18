@@ -24,7 +24,8 @@ class DmxPy:
         if self.proModel:
             self.dmxData: list(int) = [0] + [0] * self.dmx_size
         else:
-            self.dmxData: list(bytes) = [bytes([0])] + [bytes([0])] * self.dmx_size
+            self.dmxData: list(bytes) = [bytes([0])] + [bytes([0])] * \
+                    self.dmx_size
         self.path: Path = Path.home() / path
         try:
             with open(self.path, 'x'):
