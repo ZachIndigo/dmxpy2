@@ -8,6 +8,7 @@
     <array>
       <string>HOME/Scripts/venv/bin/python</string>
         <string>HOME/Scripts/dmxpy.py</string>
+        <string>-p</string>
         <string>-s</string>
         <string>EN370741</string>
     </array>

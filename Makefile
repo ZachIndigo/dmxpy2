@@ -2,15 +2,25 @@ USER := NHKUser
 HOME_DIR := /Users/$(USER)
 VENV := ~/Scripts/venv
 PYTHON := python3.14
+SERVICE := tv.newhopechurch.dmxpy
+PLIST := $(SERVICE).plist
+PRO := false
 
 all: install-service install-editor install-dmxpy install-pips
 
-install-service: tv.newhopechurch.dmxpy.plist
+install-service: remove-pro-flag
 	mkdir -p ~/Library/LaunchAgents
-	install $^ ~/Library/LaunchAgents
+	install $(PLIST) ~/Library/LaunchAgents
 
-tv.newhopechurch.dmxpy.plist: Services/macOS/tv.newhopechurch.dmxpy
-	sed "s#HOME#$(HOME_DIR)#g" $^ > tv.newhopechurch.dmxpy.plist
+$(SERVICE): Services/macOS/$(SERVICE)
+	sed "s#HOME#$(HOME_DIR)#g" $^ > $(SERVICE)
+
+$(PLIST): $(SERVICE)
+ifeq ($(PRO), true)
+	sed -i.plist '/-p/d' $(SERVICE)
+else
+	cp $(SERVICE) $(PLIST)
+endif
 
 install-editor: editor.py
 	mkdir -p ~/Applications
