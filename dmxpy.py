@@ -12,13 +12,9 @@ import pyftdi.serialext
 
 class DmxPy:
     def __init__(self, serialPort, pro=True, path='dmxpy2.txt'):
-        try:
-            self.serial = pyftdi.serialext.serial_for_url(serialPort,
-                                                          baudrate=250000,
-                                                          stopbits=2)
-        except pyftdi.serialext.SerialException:
-            print("Error: could not open Serial Port")
-            sys.exit(0)
+        self.serialPort = serialPort
+        self.serial = None
+        self._connect()
         self.proModel: bool = pro
         self.dmx_size: int = 512
         if self.proModel:
@@ -90,12 +86,37 @@ class DmxPy:
             self.serial.send_break(duration=0.001)
             self.serial.write(sdata)
 
+    def _connect(self):
+        self.serial = pyftdi.serialext.serial_for_url(
+                self.serialPort,
+                baudrate=250000,
+                stopbits=2,
+                write_timeout=1.0,
+                )
+
+    def _reconnect(self, max_retries=10, delay=2.0):
+        for attempt in range(max_retries):
+            try:
+                if self.serial:
+                    self.serial.close()
+                self._connect()
+                print(f"Reconnected on attempt {attempt + 1}")
+                return
+            except (pyftdi.serialext.SerialException, OSError) as e:
+                print(f"Reconnect attempt {attempt + 1} failed: {e}")
+                time.sleep(delay)
+        raise SystemExit(1)
+
     def display_universe(self):
         while True:
-            if (self.ftime != os.stat(self.path).st_ctime):
-                self.readFile()
-                self.ftime = os.stat(self.path).st_ctime
-            self.render()
+            try:
+                if (self.ftime != os.stat(self.path).st_ctime):
+                    self.readFile()
+                    self.ftime = os.stat(self.path).st_ctime
+                self.render()
+            except (pyftdi.serialext.SerialException, OSError) as e:
+                print(f"Serial error: {e} - reconnecting...")
+                self._reconnect()
             time.sleep(0.005)
 
 
