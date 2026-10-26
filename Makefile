@@ -22,7 +22,7 @@ $(SERVICE): Services/macOS/$(SERVICE)
 	sed -e "s#HOME#$(HOME_DIR)#g" -e "s#SERIAL#$(SERIAL)#g" $^ > $(SERVICE)
 
 $(PLIST): $(SERVICE)
-ifeq ($(PRO), true)
+ifeq ($(PRO), false)
 	sed -i.plist '/-p/d' $(SERVICE)
 else
 	cp $(SERVICE) $(PLIST)
