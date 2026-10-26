@@ -14,7 +14,7 @@ install: all
 clean:
 	rm -f $(SERVICE) $(PLIST)
 
-install-service: remove-pro-flag
+install-service: $(PLIST)
 	mkdir -p ~/Library/LaunchAgents
 	install $(PLIST) ~/Library/LaunchAgents
 
