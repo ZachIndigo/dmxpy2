@@ -9,6 +9,11 @@ PRO := false
 
 all: install-service install-editor install-dmxpy install-pips
 
+install: all
+
+clean:
+	rm -f $(SERVICE) $(PLIST)
+
 install-service: remove-pro-flag
 	mkdir -p ~/Library/LaunchAgents
 	install $(PLIST) ~/Library/LaunchAgents
