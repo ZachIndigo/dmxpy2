@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>tv.newhopechurch.dmxpy</string>
+    <key>ProgramArguments</key>
+    <array>
+      <string>HOME/Scripts/venv/bin/python</string>
+        <string>HOME/Scripts/dmxpy.py</string>
+    </array>
+    <key>KeepAlive</key>
+    <true/>
+    <key>WorkingDirectory</key>
+    <string>HOME/Scripts</string>
+</dict>
+</plist>   
