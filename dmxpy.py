@@ -117,7 +117,8 @@ class DmxPy:
             except (pyftdi.serialext.SerialException, OSError) as e:
                 print(f"Serial error: {e} - reconnecting...")
                 self._reconnect()
-            time.sleep(0.005)
+            frame_time = (513 * 44 + 92 * 12) / 1_000_000
+            time.sleep(frame_time)
 
 
 def isHex(string):
