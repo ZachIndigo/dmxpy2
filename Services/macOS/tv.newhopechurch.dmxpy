@@ -10,7 +10,7 @@
         <string>HOME/Scripts/dmxpy.py</string>
         <string>-p</string>
         <string>-s</string>
-        <string>EN370741</string>
+        <string>SERIAL</string>
     </array>
     <key>KeepAlive</key>
     <true/>

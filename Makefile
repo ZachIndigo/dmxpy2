@@ -3,6 +3,7 @@ HOME_DIR := /Users/$(USER)
 VENV := ~/Scripts/venv
 PYTHON := python3.14
 SERVICE := tv.newhopechurch.dmxpy
+SERIAL := EN371065
 PLIST := $(SERVICE).plist
 PRO := false
 
@@ -13,7 +14,7 @@ install-service: remove-pro-flag
 	install $(PLIST) ~/Library/LaunchAgents
 
 $(SERVICE): Services/macOS/$(SERVICE)
-	sed "s#HOME#$(HOME_DIR)#g" $^ > $(SERVICE)
+	sed -e "s#HOME#$(HOME_DIR)#g" -e "s#SERIAL#$(SERIAL)#g" $^ > $(SERVICE)
 
 $(PLIST): $(SERVICE)
 ifeq ($(PRO), true)
