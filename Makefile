@@ -1,6 +1,7 @@
 USER := NHKUser
 HOME_DIR := /Users/$(USER)
 VENV := ~/Scripts/venv
+PYTHON := python3.14
 
 all: install-service install-editor install-dmxpy install-pips
 
@@ -20,11 +21,11 @@ install-dmxpy: dmxpy.py
 	install dmxpy.py ~/Scripts/dmxpy.py
 
 install-pips: venv
-	$(VENV)/bin/python -m pip install pyftdi
-	$(VENV)/bin/python -m pip install pyusb
+	$(VENV)/bin/$(PYTHON) -m pip install pyftdi
+	$(VENV)/bin/$(PYTHON) -m pip install pyusb
 
 venv:
 	mkdir -p ~/Scripts
-	python3.14 -m venv $(VENV)
+	$(PYTHON) -m venv $(VENV)
 
 .PHONY: install-service install-editor install-dmxpy install-pips venv
