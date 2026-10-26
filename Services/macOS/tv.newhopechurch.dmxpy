@@ -8,6 +8,8 @@
     <array>
       <string>HOME/Scripts/venv/bin/python</string>
         <string>HOME/Scripts/dmxpy.py</string>
+        <string>-s</string>
+        <string>EN370741</string>
     </array>
     <key>KeepAlive</key>
     <true/>
