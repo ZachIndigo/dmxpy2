@@ -218,3 +218,6 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# Generated Files
+tv.newhopechurch.dmxpy.plist
