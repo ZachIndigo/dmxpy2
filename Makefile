@@ -7,7 +7,8 @@ SERVICE := tv.newhopechurch.dmxpy
 SERIAL := EN371065
 PLIST := $(SERVICE).plist
 PRO := false
-BREW := /opt/homebrew/bin/brew
+BREWPATH := /opt/homebrew/bin
+BREW := $(BREWPATH)/brew
 
 all: install-service install-editor install-dmxpy install-pips install-libusb
 
@@ -56,6 +57,6 @@ install-pips: venv
 
 venv: install-python314
 	mkdir -p ~/Scripts
-	$(PYTHON) -m venv $(VENV)
+	$(BREWPATH)/$(PYTHON) -m venv $(VENV)
 
 .PHONY: install-service install-editor install-dmxpy install-pips venv install-homebrew install-libusb
