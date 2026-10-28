@@ -1,4 +1,5 @@
 USER := NHKUser
+ADMIN := Administrator
 HOME_DIR := /Users/$(USER)
 VENV := ~/Scripts/venv
 PYTHON := python3.14
@@ -7,9 +8,18 @@ SERIAL := EN371065
 PLIST := $(SERVICE).plist
 PRO := false
 
-all: install-service install-editor install-dmxpy install-pips
+all: install-service install-editor install-dmxpy install-pips install-libusb
 
 install: all
+
+install-homebrew:
+	su - $(ADMIN) -c '/bin/bash -c "$$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"'
+
+install-libusb: install-homebrew
+	su - $(ADMIN) -c 'brew install libusb'
+
+install-python314: install-homebrew
+	su - $(ADMIN) -c 'brew install python@3.14'
 
 clean:
 	rm -f $(SERVICE) $(PLIST)
@@ -40,7 +50,7 @@ install-pips: venv
 	$(VENV)/bin/$(PYTHON) -m pip install pyftdi
 	$(VENV)/bin/$(PYTHON) -m pip install pyusb
 
-venv:
+venv: install-python314
 	mkdir -p ~/Scripts
 	$(PYTHON) -m venv $(VENV)
 
