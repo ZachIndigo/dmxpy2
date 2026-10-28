@@ -14,9 +14,9 @@ install: all
 
 install-homebrew:
 	su - $(ADMIN) -c '/bin/bash -c "$$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"'
-	echo >> /Users/$(ADMIN)/.bash_profile
-	echo 'eval "$(/opt/homebrew/bin/brew shellenv bash)"' >> /Users/$(ADMIN)/.bash_profile
-	eval "$(/opt/homebrew/bin/brew shellenv bash)"
+	su - $(ADMIN) -c 'echo >> /Users/$(ADMIN)/.bash_profile'
+	su - $(ADMIN) -c 'echo '"'"'eval "$$(/opt/homebrew/bin/brew shellenv bash)"'"'"' >> /Users/$(ADMIN)/.bash_profile'
+	su - $(ADMIN) -c 'eval "$$(/opt/homebrew/bin/brew shellenv bash)"'
 
 install-libusb: install-homebrew
 	su - $(ADMIN) -c 'brew install libusb'
