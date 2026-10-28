@@ -6,7 +6,7 @@ PYTHON := python3.14
 SERVICE := tv.newhopechurch.dmxpy
 SERIAL := EN371065
 PLIST := $(SERVICE).plist
-PRO := false
+PRO :=
 BREWPATH := /opt/homebrew/bin
 BREW := $(BREWPATH)/brew
 
@@ -33,15 +33,9 @@ install-service: $(PLIST)
 	mkdir -p ~/Library/LaunchAgents
 	install $(PLIST) ~/Library/LaunchAgents
 
-$(SERVICE): Services/macOS/$(SERVICE)
-	sed -e "s#HOME#$(HOME_DIR)#g" -e "s#SERIAL#$(SERIAL)#g" $^ > $(SERVICE)
-
-$(PLIST): $(SERVICE)
-ifeq ($(PRO), false)
-	sed -i.plist '/-p/d' $(SERVICE)
-else
-	cp $(SERVICE) $(PLIST)
-endif
+$(PLIST): Services/macOS/$(SERVICE)
+	sed -e "s#HOME#$(HOME_DIR)#g" -e "s#SERIAL#$(SERIAL)#g" $^ > $(PLIST)
+	if [ -z "$(PRO)" ]; then sed -i '' -e '/-p/d' $(PLIST); fi
 
 install-editor: editor.py
 	mkdir -p ~/Applications
